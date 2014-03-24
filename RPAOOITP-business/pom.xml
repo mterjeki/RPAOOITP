@@ -4,9 +4,8 @@
 
 	<parent>
 		<groupId>hu.bme</groupId>
-		<artifactId>RPAOOITP</artifactId>
+		<artifactId>RPAOOITP-parent</artifactId>
 		<version>0.0.1</version>
-		<relativePath>../pom.xml</relativePath>
 	</parent>
 
 	<artifactId>RPAOOITP-business</artifactId>
@@ -15,11 +14,31 @@
 
 	<dependencies>
 
-		<dependency> 
+		<dependency>
 			<groupId>hu.bme</groupId>
-			<artifactId>RPAOOITP-domain-api</artifactId>
+			<artifactId>RPAOOITP-domain</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<scope>compile</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>org.reflections</groupId>
+			<artifactId>reflections</artifactId>
 		</dependency>
 
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>build-helper-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>
