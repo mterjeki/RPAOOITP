@@ -33,6 +33,11 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
+		
+		<repository>
+			<id>doctusoft.releases</id>
+			<url>http://repo.doctusoft.com/nexus/content/repositories/releases</url>
+		</repository>
 
 	</repositories>
 
@@ -42,13 +47,13 @@
 			<groupId>hu.bme</groupId>
 			<artifactId>RPAOOITP-ejb</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax</groupId>
 			<artifactId>javaee-api</artifactId>
@@ -67,32 +72,38 @@
 			<artifactId>vaadin-server</artifactId>
 			<version>${version.vaadin}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client-compiled</artifactId>
 			<version>${version.vaadin}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-client</artifactId>
 			<version>${version.vaadin}</version>
 			<scope>provided</scope>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-push</artifactId>
 			<version>${version.vaadin}</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-themes</artifactId>
 			<version>${version.vaadin}</version>
 		</dependency>
-		
+
+		<dependency>
+			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-cdi</artifactId>
+			<version>1.0.0.alpha1</version>
+		</dependency>
+
 	</dependencies>
 
 </project>
