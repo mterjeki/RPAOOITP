@@ -1,23 +1,23 @@
 
 package hu.bme.RPAOOITP;
 
+import hu.bme.RPAOOITP.page.DefaultPage;
 import hu.bme.RPAOOITP.page.LoginPage;
+import hu.bme.RPAOOITP.page.RegistrationPage;
 
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
 import javax.inject.Inject;
 
 import lombok.Getter;
 
 import com.vaadin.cdi.CDIUI;
-import com.vaadin.cdi.UIScoped;
+import com.vaadin.cdi.CDIViewProvider;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.Page;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.UI;
 
 @CDIUI
@@ -32,7 +32,7 @@ public class RPAOOITPApplication extends UI {
 	private RPAOOITPAuthControl authControl;
 	
 	@Inject
-	private RPAOOITPViewProvider viewProvider;
+	private CDIViewProvider viewProvider;
 	
 	@Getter
 	private Navigator navigator;
@@ -58,6 +58,22 @@ public class RPAOOITPApplication extends UI {
 		navigator = new Navigator( this, mainScreen );
 		navigator.addViewChangeListener( new RPAOOITPViewChangeListener( request ) );
 		navigator.addProvider( viewProvider );
+		final String currentPage = handleCurrentNavigation( viewId );
+		getPage().setUriFragment( "!" + currentPage );
+	}
+	
+	private String handleCurrentNavigation( final String taskType ) {
+		String f = Page.getCurrent().getUriFragment();
+		if (taskType != null) {
+			return taskType;
+		}
+		if (f != null && f.startsWith( "!" )) {
+			f = f.substring( 1 );
+		}
+		if (f == null || f.equals( "" ) || f.equals( "/" )) {
+			return DefaultPage.NAV_PATH;
+		}
+		return f;
 	}
 	
 	public class RPAOOITPViewChangeListener implements ViewChangeListener {
@@ -74,12 +90,17 @@ public class RPAOOITPApplication extends UI {
 			View oldView = event.getOldView();
 			View newView = event.getNewView();
 			
-			if (newView instanceof LoginPage) {
+			if (newView instanceof LoginPage || newView instanceof RegistrationPage) {
 				return true;
 			}
 			
 			if (!authControl.isUserSignedIn()) {
 				String fragment = Page.getCurrent().getUriFragment();
+				
+				if (fragment == null) {
+					return false;
+				}
+				
 				if (fragment.startsWith( "!" )) {
 					fragment = fragment.substring( 1 );
 					request.getWrappedSession().setAttribute( "viewId", fragment );
@@ -99,17 +120,6 @@ public class RPAOOITPApplication extends UI {
 		@Override
 		public void afterViewChange( final ViewChangeEvent event ) {
 			//
-		}
-		
-	}
-	
-	@UIScoped
-	public class RPAOOITPApplicationLayout extends HorizontalLayout {
-		
-		@PostConstruct
-		public void init() {
-			setSizeUndefined();
-			setWidth( "100%" );
 		}
 		
 	}

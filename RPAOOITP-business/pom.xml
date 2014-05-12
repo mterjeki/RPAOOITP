@@ -29,6 +29,13 @@
 			<groupId>org.reflections</groupId>
 			<artifactId>reflections</artifactId>
 		</dependency>
+		
+		<dependency>
+			<groupId>com.google.inject</groupId>
+			<artifactId>guice</artifactId>
+			<scope>provided</scope>
+			<version>3.0</version>
+		</dependency>
 
 	</dependencies>
 

@@ -1,17 +1,19 @@
 
 package hu.bme.RPAOOITP.components;
 
-import hu.bme.RPAOOITP.dto.RPAOOITPDTO;
+import hu.bme.RPAOOITP.domain.io.AbstractRPAOOITPDTO;
+import lombok.Getter;
 
 import com.vaadin.ui.FormLayout;
 
-public class GenericFormLayout<DTO extends RPAOOITPDTO> extends FormLayout {
+public class GenericFormLayout<DTO extends AbstractRPAOOITPDTO> extends FormLayout implements GenericLayout<DTO> {
 	
-	private DTO dto;
+	@Getter
+	private final DTO data;
 	
 	public GenericFormLayout( final DTO dto ) {
 		super();
-		this.dto = dto;
+		this.data = dto;
 	}
 	
 }

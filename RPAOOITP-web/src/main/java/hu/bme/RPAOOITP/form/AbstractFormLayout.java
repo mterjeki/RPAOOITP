@@ -14,8 +14,8 @@ public abstract class AbstractFormLayout extends VerticalLayout {
 	
 	protected final FormLayout form = new FormLayout();
 	
-	private Button cancelButton = new Button( "Cancel" );
-	private Button submitButton = new Button( "Submit" );
+	private final Button cancelButton = new Button( "Cancel" );
+	private final Button submitButton = new Button( "Submit" );
 	
 	public AbstractFormLayout() {
 		super();
@@ -58,12 +58,12 @@ public abstract class AbstractFormLayout extends VerticalLayout {
 	}
 	
 	protected void submitCheck() {
-		if (!FormUtil.isAllRequiredFieldIsFilled( form )) {
-			
-		}
-		else {
-			submit();
-		}
+		//		if (!FormUtil.isAllRequiredFieldIsFilled( form )) {
+		
+		//		}
+		//		else {
+		//			submit();
+		//		}
 	}
 	
 	protected void submit() {

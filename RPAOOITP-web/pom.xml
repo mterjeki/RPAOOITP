@@ -47,7 +47,12 @@
 			<groupId>hu.bme</groupId>
 			<artifactId>RPAOOITP-ejb</artifactId>
 		</dependency>
-
+		
+		<dependency>
+			<groupId>hu.bme</groupId>
+			<artifactId>RPAOOITP-domain</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
