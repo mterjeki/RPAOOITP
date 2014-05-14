@@ -1,0 +1,115 @@
+@import "../reindeer/legacy-styles.css";
+
+.v-app {
+    background-color: white;
+}
+
+.v-horizontallayout-header {
+	background-color: #067db7;
+	display: block;
+	color: white;
+}
+
+.v-verticallayout-content {
+	padding: 20px;
+	background-color: white;
+	display: block;
+	color: #414141;
+	min-height: 100%;
+	padding-left: 80px;
+	padding-right: 80px;
+}
+
+.v-verticallayout-root {
+	background-color: #067db7; 
+}
+
+.v-verticallayout-login {
+	background-color: white;
+	margin-top: 200px;
+	padding: 20px 40px 20px 40px; 
+	border-radius: 6px;
+}
+
+.v-verticallayout-registration {
+	background-color: white;
+	margin-top: 100px;
+	padding: 20px 40px 20px 40px; 
+	border-radius: 6px;
+}
+
+.v-slot-content {
+	height: 100%;
+}
+
+.v-slot-screen {
+	height: 100%;
+}
+
+.v-verticallayout-screen {
+	height: 100%;
+}
+
+.application-blue {
+	background-color: #067db7;
+}
+
+.application {
+	background-color: white;
+}
+
+.v-button-login {
+	display: inline-block;
+	height: 58px;
+	padding-top: 15px;
+	background-color: #ffa210;
+	color: #FFF;
+	border: 0 none;
+	border-radius: 6px;
+	cursor: pointer;
+	font:24px !important;
+}
+
+.v-button-calendar {
+	display: inline-block;
+	height: 40px;
+	padding-top: 6px;
+	background-color: #067db7;
+	color: #FFF;
+	border: 0 none;
+	border-radius: 6px;
+	cursor: pointer;
+	font:24px !important;
+	margin: 5px;
+}
+
+.v-button-caption {
+	color: white !important;
+	font-size: 18px;
+}
+
+.v-button-wrap {
+	background-image: url('') !important;
+	background-position: 0px !important;
+}
+
+.calendarButtons {
+	padding: 2px;
+	margin: 10px;
+}
+
+.v-button {
+	cursor: pointer;
+	background-image: url('') !important;
+	background-position: 0px !important;
+}
+
+.v-textfield {
+	background-image: url('') !important;
+	height: 30px !important;
+	width: 220px !important;
+}
+
+.v-caption-input {
+	font-size: 14px;
+} 

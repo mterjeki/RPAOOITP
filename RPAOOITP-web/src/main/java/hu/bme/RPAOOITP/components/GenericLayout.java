@@ -1,9 +1,8 @@
 
 package hu.bme.RPAOOITP.components;
 
-import hu.bme.RPAOOITP.domain.io.AbstractRPAOOITPDTO;
 
-public interface GenericLayout<DTO extends AbstractRPAOOITPDTO> {
+public interface GenericLayout<DTO extends Object> {
 	
 	DTO getData();
 	

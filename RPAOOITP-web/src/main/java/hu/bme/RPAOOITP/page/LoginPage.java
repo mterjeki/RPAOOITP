@@ -10,15 +10,18 @@ import javax.inject.Inject;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.Reindeer;
 
 @CDIView( value = LoginPage.NAV_PATH )
 public class LoginPage extends AbstractRPAOOITPPage implements ClickListener {
@@ -32,7 +35,9 @@ public class LoginPage extends AbstractRPAOOITPPage implements ClickListener {
 	
 	@Override
 	protected void initLayout() {
+		setStyleName( "root" );
 		VerticalLayout root = new VerticalLayout();
+		root.setStyleName( "login" );
 		root.setSizeUndefined();
 		addComponent( root );
 		setComponentAlignment( root, Alignment.MIDDLE_CENTER );
@@ -42,25 +47,26 @@ public class LoginPage extends AbstractRPAOOITPPage implements ClickListener {
 		root.addComponent( hbTitle );
 		
 		Label title = new Label( "Login" );
+		title.setStyleName( Reindeer.LABEL_H1 );
 		hbTitle.addComponent( title );
 		hbTitle.setComponentAlignment( title, Alignment.MIDDLE_CENTER );
 		
 		loginForm = new LoginForm( new LoginDTO() );
 		root.addComponent( loginForm );
 		
-		final Button btnLogin = new Button( "Login" );
+		final Button btnLogin = new Button( "Log In" );
 		btnLogin.setId( "login" );
+		btnLogin.setStyleName( "login" );
+		btnLogin.setWidth( "100px" );
 		btnLogin.setClickShortcut( KeyCode.ENTER );
 		btnLogin.addClickListener( this );
 		
-		final Button btnRegistration = new Button( "Registration" );
+		final Link btnRegistration = new Link( "Registration", new ExternalResource( "#!" + RegistrationPage.NAV_PATH ) );
 		btnRegistration.setId( "registration" );
-		btnRegistration.addClickListener( this );
 		
-		HorizontalLayout hlButtons = new HorizontalLayout( btnLogin, btnRegistration );
+		VerticalLayout hlButtons = new VerticalLayout( btnLogin, btnRegistration );
 		hlButtons.setSizeFull();
-		hlButtons.setComponentAlignment( btnRegistration, Alignment.TOP_LEFT );
-		hlButtons.setComponentAlignment( btnLogin, Alignment.TOP_RIGHT );
+		hlButtons.setSpacing( true );
 		root.addComponent( hlButtons );
 	}
 	
@@ -71,15 +77,11 @@ public class LoginPage extends AbstractRPAOOITPPage implements ClickListener {
 		if (id.equals( "login" )) {
 			try {
 				authControl.login( loginForm.getData() );
-				getUI().getNavigator().navigateTo( AdminPage.NAV_PATH );
+				getUI().getNavigator().navigateTo( FirstLoggedInPage.NAV_PATH );
 			}
 			catch (LoginException e) {
 				Notification.show( e.getMessage(), Type.ERROR_MESSAGE );
 			}
-		}
-		
-		if (id.equals( "registration" )) {
-			getUI().getNavigator().navigateTo( RegistrationPage.NAV_PATH );
 		}
 		
 	}

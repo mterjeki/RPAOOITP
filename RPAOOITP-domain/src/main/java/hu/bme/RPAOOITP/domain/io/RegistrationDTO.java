@@ -17,6 +17,10 @@ public class RegistrationDTO extends AbstractRPAOOITPDTO {
 	
 	private String password;
 	
+	private String lastName;
+	
+	private String firstName;
+	
 	public void setPassword( final String password ) {
 		this.password = SecurityUtil.doMD5Hash( password );
 	}

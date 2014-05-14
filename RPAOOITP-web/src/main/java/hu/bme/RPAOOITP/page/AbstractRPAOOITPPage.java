@@ -11,6 +11,7 @@ public abstract class AbstractRPAOOITPPage extends VerticalLayout implements Vie
 	
 	@PostConstruct
 	public void init() {
+		setStyleName( "screen" );
 		setSizeFull();
 		initLayout();
 	}

@@ -4,12 +4,15 @@ package hu.bme.RPAOOITP.domain.query.impl;
 import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
 import hu.bme.RPAOOITP.domain.io.LoginDTO;
 import hu.bme.RPAOOITP.domain.io.RegistrationDTO;
+import hu.bme.RPAOOITP.domain.model.Competency;
 import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.domain.query.UserQueries;
 import hu.bme.RPAOOITP.domain.query.exception.LoginException;
 import hu.bme.RPAOOITP.domain.query.exception.RegistrationException;
 
 import java.util.List;
+import java.util.Set;
+import java.util.UUID;
 
 import com.google.common.base.Preconditions;
 
@@ -31,7 +34,8 @@ public class HibernateUserQueries extends AbstractHibernateBaseRPAOOITPQueries i
 			if (username.equals( usernameOrEmail ) || email.equals( usernameOrEmail )) {
 				
 				if (password.equals( passwordIn )) {
-					return new LoggedInUserDTO( user.getId(), username, email );
+					return new LoggedInUserDTO( user.getId(), user.getLastName(), user.getFirstName(), username, email,
+						user.getPassword() );
 				}
 				else {
 					throw new LoginException( "Incorrect password" );
@@ -66,8 +70,52 @@ public class HibernateUserQueries extends AbstractHibernateBaseRPAOOITPQueries i
 			}
 		}
 		
-		User user = new User( username, email, password );
+		User user = new User( username, email, password, registrationDTO.getLastName(), registrationDTO.getFirstName() );
 		persistEntity( user );
+	}
+	
+	@Override
+	public void modifyUser( final RegistrationDTO registrationDTO ) throws RegistrationException {
+		UUID id = registrationDTO.getId();
+		User user = findEntityById( User.class, id );
+		user.setEmail( registrationDTO.getEmail() );
+		user.setFirstName( registrationDTO.getFirstName() );
+		user.setLastName( registrationDTO.getLastName() );
+		user.setPassword( registrationDTO.getPassword() );
+		user.setUsername( registrationDTO.getUsername() );
+		
+		List<User> users = loadAll( User.class );
+		
+		for (User tmpuser : users) {
+			if (tmpuser.getId().equals( id )) {
+				continue;
+			}
+			
+			String userUsername = tmpuser.getUsername();
+			String userEmail = tmpuser.getEmail();
+			
+			if (userUsername.equals( user.getUsername() )) {
+				throw new RegistrationException( "Username is already registered, please select another one" );
+			}
+			
+			if (userEmail.equals( user.getEmail() )) {
+				throw new RegistrationException( "Email is already registered, only one account is possible for one user" );
+			}
+		}
+		
+		mergeEntity( user );
+	}
+	
+	@Override
+	public void addCompetencies( final LoggedInUserDTO user, final Competency competency ) {
+		User loggedInUser = findEntityById( User.class, user.getId() );
+		loggedInUser.getCompetencies().add( competency );
+	}
+	
+	@Override
+	public Set<Competency> findAllCompetencyByUser( final LoggedInUserDTO user ) {
+		User loggedInUser = findEntityById( User.class, user.getId() );
+		return loggedInUser.getCompetencies();
 	}
 	
 }

@@ -13,6 +13,7 @@ public class RPAOOITPApplicationLayout extends HorizontalLayout {
 	public void init() {
 		setSizeUndefined();
 		setWidth( "100%" );
+		setStyleName( "mainScreen" );
 	}
 	
 }

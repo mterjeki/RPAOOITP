@@ -20,6 +20,8 @@ public class LoginForm extends GenericFormLayout<LoginDTO> {
 		
 		addComponent( username );
 		addComponent( password );
+		
+		setSpacing( true );
 	}
 	
 }

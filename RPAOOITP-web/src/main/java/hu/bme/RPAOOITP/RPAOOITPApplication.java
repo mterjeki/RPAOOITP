@@ -11,6 +11,8 @@ import javax.inject.Inject;
 
 import lombok.Getter;
 
+import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Widgetset;
 import com.vaadin.cdi.CDIUI;
 import com.vaadin.cdi.CDIViewProvider;
 import com.vaadin.navigator.Navigator;
@@ -21,6 +23,8 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.UI;
 
 @CDIUI
+@Theme( "rpaooitp" )
+@Widgetset( value = "hu.bme.RPAOOITP.widgetset" )
 public class RPAOOITPApplication extends UI {
 	
 	private static final String TITLE = "Resource planning and optimization of IT projects";
@@ -51,38 +55,45 @@ public class RPAOOITPApplication extends UI {
 			
 		}
 		
-		setSizeUndefined();
-		setWidth( "100%" );
+		setSizeFull();
 		setContent( mainScreen );
 		
+		setStyleName( "application" );
+		
 		navigator = new Navigator( this, mainScreen );
-		navigator.addViewChangeListener( new RPAOOITPViewChangeListener( request ) );
+		navigator.addViewChangeListener( new RPAOOITPViewChangeListener( request, this ) );
 		navigator.addProvider( viewProvider );
 		final String currentPage = handleCurrentNavigation( viewId );
 		getPage().setUriFragment( "!" + currentPage );
 	}
 	
-	private String handleCurrentNavigation( final String taskType ) {
+	private String handleCurrentNavigation( final String viewId ) {
 		String f = Page.getCurrent().getUriFragment();
-		if (taskType != null) {
-			return taskType;
+		
+		if (viewId != null) {
+			return viewId;
 		}
+		
 		if (f != null && f.startsWith( "!" )) {
 			f = f.substring( 1 );
 		}
+		
 		if (f == null || f.equals( "" ) || f.equals( "/" )) {
 			return DefaultPage.NAV_PATH;
 		}
+		
 		return f;
 	}
 	
 	public class RPAOOITPViewChangeListener implements ViewChangeListener {
 		
+		private final UI ui;
 		private final VaadinRequest request;
 		
-		public RPAOOITPViewChangeListener( final VaadinRequest request ) {
+		public RPAOOITPViewChangeListener( final VaadinRequest request, final UI ui ) {
 			super();
 			this.request = request;
+			this.ui = ui;
 		}
 		
 		@Override
@@ -91,7 +102,11 @@ public class RPAOOITPApplication extends UI {
 			View newView = event.getNewView();
 			
 			if (newView instanceof LoginPage || newView instanceof RegistrationPage) {
+				ui.setStyleName( "application-blue" );
 				return true;
+			}
+			else {
+				ui.setStyleName( "application" );
 			}
 			
 			if (!authControl.isUserSignedIn()) {
@@ -108,10 +123,6 @@ public class RPAOOITPApplication extends UI {
 				
 				navigator.navigateTo( LoginPage.NAV_PATH );
 				return false;
-			}
-			
-			if (oldView == newView) {
-				return true;
 			}
 			
 			return true;

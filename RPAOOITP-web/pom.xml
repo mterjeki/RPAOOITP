@@ -33,7 +33,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-		
+
 		<repository>
 			<id>doctusoft.releases</id>
 			<url>http://repo.doctusoft.com/nexus/content/repositories/releases</url>
@@ -47,12 +47,12 @@
 			<groupId>hu.bme</groupId>
 			<artifactId>RPAOOITP-ejb</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>hu.bme</groupId>
 			<artifactId>RPAOOITP-domain</artifactId>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.enterprise</groupId>
 			<artifactId>cdi-api</artifactId>
@@ -105,10 +105,45 @@
 
 		<dependency>
 			<groupId>com.vaadin</groupId>
+			<artifactId>vaadin-client-compiler</artifactId>
+			<version>${version.vaadin}</version>
+			<scope>provided</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-cdi</artifactId>
 			<version>1.0.0.alpha1</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.vaadin.addon</groupId>
+			<artifactId>vaadin-calendar</artifactId>
+			<version>2.0.0</version>
+		</dependency>
+
 	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>com.vaadin</groupId>
+				<artifactId>vaadin-maven-plugin</artifactId>
+				<executions>
+<!-- 					<execution> -->
+<!-- 						<phase>compile</phase> -->
+<!-- 						<goals> -->
+<!-- 							<goal>compile</goal> -->
+<!-- 						</goals> -->
+<!-- 					</execution> -->
+				</executions>
+				<configuration>
+					<modules>
+						<module>com.vaadin.addon.calendar.gwt.CalendarWidgetset</module>
+					</modules>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
 </project>

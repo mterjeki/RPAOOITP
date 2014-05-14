@@ -61,15 +61,7 @@ public class FormUtil {
 				}
 				catch (InvalidValueException notValidException) {
 					String validationMessage = notValidException.getMessage();
-					
-				}
-				
-				if (castedComponent.isValid()) {
-					
-				}
-				
-				if (castedComponent.isRequired() && castedComponent.getValue() == null) {
-					validateErrors.add( castedComponent.getRequiredError() );
+					validateErrors.add( validationMessage );
 				}
 				
 			}

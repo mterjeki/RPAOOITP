@@ -6,6 +6,13 @@
 	<package>hu.bme.RPAOOITP.domain.model</package>
 	
 	<mapped-superclass class="AbstractUuidIdentifiable"></mapped-superclass>
+	<mapped-superclass class="AbstractProjectUnit"></mapped-superclass>
+	<entity class="Company"></entity>
+	<entity class="Competency"></entity>
+	<entity class="Presence"></entity>
+	<entity class="Process"></entity>
+	<entity class="Project"></entity>
+	<entity class="Task"></entity>
 	<entity class="User"></entity>
 	
 </entity-mappings>

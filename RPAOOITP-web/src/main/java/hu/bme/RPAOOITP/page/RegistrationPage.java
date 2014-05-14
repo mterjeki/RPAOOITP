@@ -14,15 +14,18 @@ import javax.ejb.EJB;
 
 import com.vaadin.cdi.CDIView;
 import com.vaadin.event.ShortcutAction.KeyCode;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.Reindeer;
 
 @CDIView( value = RegistrationPage.NAV_PATH )
 public class RegistrationPage extends AbstractRPAOOITPPage implements ClickListener {
@@ -36,8 +39,11 @@ public class RegistrationPage extends AbstractRPAOOITPPage implements ClickListe
 	
 	@Override
 	protected void initLayout() {
+		setStyleName( "root" );
 		VerticalLayout root = new VerticalLayout();
+		root.setStyleName( "registration" );
 		root.setSizeUndefined();
+		root.setHeight( "100%" );
 		addComponent( root );
 		setComponentAlignment( root, Alignment.MIDDLE_CENTER );
 		
@@ -46,6 +52,7 @@ public class RegistrationPage extends AbstractRPAOOITPPage implements ClickListe
 		root.addComponent( hbTitle );
 		
 		Label title = new Label( "Registration" );
+		title.setStyleName( Reindeer.LABEL_H1 );
 		hbTitle.addComponent( title );
 		hbTitle.setComponentAlignment( title, Alignment.MIDDLE_CENTER );
 		
@@ -53,12 +60,14 @@ public class RegistrationPage extends AbstractRPAOOITPPage implements ClickListe
 		root.addComponent( registrationForm );
 		
 		final Button btnRegistration = new Button( "Registration" );
+		btnRegistration.setStyleName( "login" );
 		btnRegistration.setClickShortcut( KeyCode.ENTER );
 		btnRegistration.addClickListener( this );
 		
-		HorizontalLayout hlButtons = new HorizontalLayout( btnRegistration );
+		final Link admin = new Link( "Back", new ExternalResource( "#!" + LoginPage.NAV_PATH ) );
+		VerticalLayout hlButtons = new VerticalLayout( btnRegistration, admin );
 		hlButtons.setSizeFull();
-		hlButtons.setComponentAlignment( btnRegistration, Alignment.TOP_RIGHT );
+		hlButtons.setSpacing( true );
 		root.addComponent( hlButtons );
 		
 	}
