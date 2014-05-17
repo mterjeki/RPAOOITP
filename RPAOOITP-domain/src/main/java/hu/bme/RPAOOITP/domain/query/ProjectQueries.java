@@ -6,21 +6,29 @@ import hu.bme.RPAOOITP.domain.model.Company;
 import hu.bme.RPAOOITP.domain.model.Process;
 import hu.bme.RPAOOITP.domain.model.Project;
 import hu.bme.RPAOOITP.domain.model.Task;
-import hu.bme.RPAOOITP.domain.query.impl.HibernateUserQueries;
+import hu.bme.RPAOOITP.domain.query.impl.HibernateProjectQueries;
 
 import java.util.List;
 
 import com.google.inject.ImplementedBy;
 
-@ImplementedBy( HibernateUserQueries.class )
+@ImplementedBy( HibernateProjectQueries.class )
 public interface ProjectQueries {
 	
-	List<Project> findProjectsByCompany( final Company company );
-	
-	List<Process> findProcessesByProject( final Project project );
-	
-	List<Task> findTasksByProcess( final Process process );
-	
 	List<AbstractProjectUnit> findAllProjectUnitsByCompany( final Company company );
+	
+	void addProjectToCompany( final Project project, final Company company );
+	
+	void removeProject( final Project project );
+	
+	void addProcessToProject( final Project project, final Process process );
+	
+	void removeProcess( final Process process );
+	
+	void addTaskToProcess( final Process process, final Task task );
+	
+	void removeTask( final Task task );
+	
+	void addTaskToProject( final Project process, final Task task );
 	
 }

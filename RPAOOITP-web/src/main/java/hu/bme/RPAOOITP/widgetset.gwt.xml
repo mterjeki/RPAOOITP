@@ -1,4 +1,5 @@
 <module>
 	<inherits name="com.vaadin.DefaultWidgetSet" />
 	<inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
+	<inherits name="org.vaadin.activelink.ActivelinkWidgetset" />
 </module>

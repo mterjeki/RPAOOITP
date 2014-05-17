@@ -4,6 +4,7 @@ package hu.bme.RPAOOITP.util;
 import hu.bme.RPAOOITP.components.GenericLayout;
 
 import com.vaadin.data.util.NestedMethodProperty;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.DateField;
@@ -29,19 +30,27 @@ public class FieldUtil {
 	}
 	
 	public static DateField createRequiredDateField( final GenericLayout<?> layout, final String propertyName ) {
-		return createRequiredAbstracField( new DateField(), layout.getData(), propertyName );
+		DateField dateField = new DateField();
+		dateField.setResolution( Resolution.MINUTE );
+		return createRequiredAbstracField( dateField, layout.getData(), propertyName );
 	}
 	
 	public static DateField createRequiredDateField( final Object instance, final String propertyName ) {
-		return createRequiredAbstracField( new DateField(), instance, propertyName );
+		DateField dateField = new DateField();
+		dateField.setResolution( Resolution.MINUTE );
+		return createRequiredAbstracField( dateField, instance, propertyName );
 	}
 	
 	public static DateField createDateField( final GenericLayout<?> layout, final String propertyName ) {
-		return createAbstractField( new DateField(), layout.getData(), propertyName );
+		DateField dateField = new DateField();
+		dateField.setResolution( Resolution.MINUTE );
+		return createAbstractField( dateField, layout.getData(), propertyName );
 	}
 	
 	public static DateField createDateField( final Object instance, final String propertyName ) {
-		return createAbstractField( new DateField(), instance, propertyName );
+		DateField dateField = new DateField();
+		dateField.setResolution( Resolution.MINUTE );
+		return createAbstractField( dateField, instance, propertyName );
 	}
 	
 	public static PasswordField createRequiredPasswordField( final GenericLayout<?> layout, final String propertyName ) {

@@ -53,7 +53,7 @@ public class FormUtil {
 		while (iterator.hasNext()) {
 			Component component = iterator.next();
 			
-			if (component instanceof Field) {
+			if (component instanceof Field && component.isVisible()) {
 				Field castedComponent = (Field) component;
 				
 				try {
@@ -98,7 +98,7 @@ public class FormUtil {
 		while (iterator.hasNext()) {
 			Component component = iterator.next();
 			
-			if (component instanceof Field) {
+			if (component instanceof Field && component.isVisible()) {
 				Field castedComponent = (Field) component;
 				
 				if (castedComponent.isRequired() && castedComponent.getValue() == null) {

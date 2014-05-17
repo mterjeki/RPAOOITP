@@ -4,9 +4,7 @@ package hu.bme.RPAOOITP.domain.test;
 import hu.bme.RPAOOITP.domain.model.Competency;
 import hu.bme.RPAOOITP.domain.modul.RPAOOITPModule;
 
-import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -18,9 +16,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 
@@ -72,24 +68,19 @@ public class InitDB {
 	
 	@Test
 	public void initDBTest() {
-		Set<Competency> generateCompetencies = generateCompetencies();
-		for (Competency competency : generateCompetencies) {
-			em.persist( competency );
-		}
+		generateCompetencies();
 	}
 	
-	private static Set<Competency> generateCompetencies() {
-		List<Competency> competencies = Lists.newArrayList();
+	private void generateCompetencies() {
 		
-		competencies.add( new Competency( "JSF" ) );
-		competencies.add( new Competency( "MYSQL" ) );
-		competencies.add( new Competency( "ORACLE" ) );
-		competencies.add( new Competency( "HIBERNATE" ) );
-		competencies.add( new Competency( "WICKET" ) );
-		competencies.add( new Competency( "VAADIN" ) );
-		competencies.add( new Competency( "APPENGINE" ) );
-		competencies.add( new Competency( "GWT" ) );
+		em.persist( new Competency( "JSF" ) );
+		em.persist( new Competency( "MYSQL" ) );
+		em.persist( new Competency( "ORACLE" ) );
+		em.persist( new Competency( "HIBERNATE" ) );
+		em.persist( new Competency( "WICKET" ) );
+		em.persist( new Competency( "VAADIN" ) );
+		em.persist( new Competency( "APPENGINE" ) );
+		em.persist( new Competency( "GWT" ) );
 		
-		return Sets.newLinkedHashSet( competencies );
 	}
 }

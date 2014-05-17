@@ -27,7 +27,6 @@ public class Competency extends AbstractUuidIdentifiable {
 	
 	public Competency( final String competency ) {
 		super();
-		generateIdIfNotSpecified();
 		this.competency = competency;
 	}
 	

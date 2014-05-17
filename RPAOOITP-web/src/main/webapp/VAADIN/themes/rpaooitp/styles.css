@@ -84,7 +84,7 @@
 }
 
 .v-button-caption {
-	color: white !important;
+	color: white ;
 	font-size: 18px;
 }
 
@@ -113,3 +113,9 @@
 .v-caption-input {
 	font-size: 14px;
 } 
+
+.v-button-remove {
+	color: #000 !important;
+	font-size: 12px !important;
+	background-color: #067db7 !important;
+}

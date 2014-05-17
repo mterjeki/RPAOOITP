@@ -3,8 +3,8 @@ package hu.bme.RPAOOITP.form;
 
 import hu.bme.RPAOOITP.RPAOOITPAuthControl;
 import hu.bme.RPAOOITP.components.GenericFormLayout;
-import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
 import hu.bme.RPAOOITP.domain.io.RegistrationDTO;
+import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.util.FieldUtil;
 import hu.bme.RPAOOITP.util.MessageUtil;
 
@@ -26,7 +26,7 @@ public class AdminForm extends GenericFormLayout<RegistrationDTO> {
 	public AdminForm( final RPAOOITPAuthControl authControl ) {
 		super( new RegistrationDTO() );
 		
-		LoggedInUserDTO user = authControl.getLoggedInUser();
+		User user = authControl.getLoggedInUser();
 		
 		username = FieldUtil.createTextField( this, "username" );
 		firstName = FieldUtil.createTextField( this, "firstName" );
@@ -41,7 +41,7 @@ public class AdminForm extends GenericFormLayout<RegistrationDTO> {
 		Label lastNameLabel = new Label( messageUtil.getMessage( "lastName" ) + ": (current: " + user.getLastName() + ")" );
 		Label eamilLabel = new Label( messageUtil.getMessage( "lastName" ) + ": (current: " + user.getEmail() + ")" );
 		
-		addComponent( password );
+		//		addComponent( password );
 		
 		addComponent( usernameLabel );
 		addComponent( username );

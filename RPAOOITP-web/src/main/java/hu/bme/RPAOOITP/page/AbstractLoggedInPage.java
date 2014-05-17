@@ -2,7 +2,10 @@
 package hu.bme.RPAOOITP.page;
 
 import hu.bme.RPAOOITP.RPAOOITPAuthControl;
+import hu.bme.RPAOOITP.domain.model.User;
+import hu.bme.RPAOOITP.ejb.UserManager;
 
+import javax.ejb.EJB;
 import javax.inject.Inject;
 
 import lombok.Getter;
@@ -23,6 +26,9 @@ public abstract class AbstractLoggedInPage extends AbstractRPAOOITPPage {
 	
 	protected HeaderPanel header;
 	protected VerticalLayout content;
+	
+	@EJB
+	private UserManager userManager;
 	
 	@Override
 	protected void initLayout() {
@@ -53,15 +59,34 @@ public abstract class AbstractLoggedInPage extends AbstractRPAOOITPPage {
 	public void enter( final ViewChangeEvent event ) {
 		super.enter( event );
 		changeUserName();
+		User loggedInUser = authControl.getLoggedInUser();
+		
+		if (loggedInUser.hasCompany()) {
+			header.getRpaooit().setVisible( false );
+			header.getCompany().setCaption( loggedInUser.getCompany().getCompanyName() );
+			header.getCompany().setVisible( true );
+			header.getProjects().setVisible( true );
+		}
+		else {
+			header.getRpaooit().setVisible( true );
+			header.getCompany().setVisible( false );
+			header.getProjects().setVisible( false );
+		}
 	}
 	
-	private class HeaderPanel extends HorizontalLayout {
+	class HeaderPanel extends HorizontalLayout {
 		
 		@Getter
 		private Button admin;
 		private Button logout;
+		@Getter
 		private Button rpaooit;
+		@Getter
+		private Button company;
 		private Button presence;
+		private Button competency;
+		@Getter
+		private Button projects;
 		
 		public HeaderPanel() {
 			super();
@@ -71,36 +96,57 @@ public abstract class AbstractLoggedInPage extends AbstractRPAOOITPPage {
 		private void initLayout() {
 			rpaooit = new Button( " > RPAOOITP" );
 			rpaooit.setId( "rpaooit" );
+			
 			admin = new Button( "" );
 			admin.setId( "admin" );
-			logout = new Button( " > logout" );
+			
+			logout = new Button( " > Logout " );
 			logout.setId( "logout" );
 			
 			presence = new Button( " > Presence " );
 			presence.setId( "presence" );
+			
+			competency = new Button( " > Competency " );
+			competency.setId( "competency" );
+			
+			company = new Button();
+			company.setId( "company" );
+			company.setVisible( false );
+			
+			projects = new Button( " > Projects " );
+			projects.setId( "projects" );
+			projects.setVisible( false );
 			
 			HeaderClickListener clickListener = new HeaderClickListener();
 			presence.addClickListener( clickListener );
 			logout.addClickListener( clickListener );
 			rpaooit.addClickListener( clickListener );
 			admin.addClickListener( clickListener );
+			competency.addClickListener( clickListener );
+			company.addClickListener( clickListener );
+			projects.addClickListener( clickListener );
 			
 			HorizontalLayout basicActions = new HorizontalLayout();
-			basicActions.setWidth( "400px" );
+			basicActions.addComponent( competency );
 			basicActions.addComponent( presence );
 			basicActions.addComponent( admin );
 			basicActions.addComponent( logout );
 			
+			HorizontalLayout rpaooitpContainer = new HorizontalLayout();
+			rpaooitpContainer.addComponent( rpaooit );
+			rpaooitpContainer.addComponent( company );
+			rpaooitpContainer.addComponent( projects );
+			rpaooitpContainer.setComponentAlignment( rpaooit, Alignment.MIDDLE_CENTER );
+			rpaooitpContainer.setComponentAlignment( company, Alignment.MIDDLE_CENTER );
+			rpaooitpContainer.setComponentAlignment( projects, Alignment.MIDDLE_CENTER );
+			addComponent( rpaooitpContainer );
+			
+			addComponent( basicActions );
+			basicActions.setComponentAlignment( competency, Alignment.MIDDLE_LEFT );
 			basicActions.setComponentAlignment( presence, Alignment.MIDDLE_LEFT );
 			basicActions.setComponentAlignment( admin, Alignment.MIDDLE_LEFT );
 			basicActions.setComponentAlignment( logout, Alignment.MIDDLE_LEFT );
 			
-			HorizontalLayout rpaooitpContainer = new HorizontalLayout();
-			rpaooitpContainer.addComponent( rpaooit );
-			rpaooitpContainer.setComponentAlignment( rpaooit, Alignment.MIDDLE_CENTER );
-			addComponent( rpaooitpContainer );
-			
-			addComponent( basicActions );
 			setComponentAlignment( basicActions, Alignment.MIDDLE_RIGHT );
 			setComponentAlignment( rpaooitpContainer, Alignment.MIDDLE_LEFT );
 		}
@@ -126,6 +172,18 @@ public abstract class AbstractLoggedInPage extends AbstractRPAOOITPPage {
 				
 				if (id.equals( "presence" )) {
 					getUI().getNavigator().navigateTo( PresencePage.NAV_PATH );
+				}
+				
+				if (id.equals( "competency" )) {
+					getUI().getNavigator().navigateTo( CompetencyPage.NAV_PATH );
+				}
+				
+				if (id.equals( "company" )) {
+					getUI().getNavigator().navigateTo( CompanyPage.NAV_PATH );
+				}
+				
+				if (id.equals( "projects" )) {
+					getUI().getNavigator().navigateTo( ProjectsPage.NAV_PATH );
 				}
 				
 			}

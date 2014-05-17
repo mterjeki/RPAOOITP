@@ -2,8 +2,8 @@
 package hu.bme.RPAOOITP.page;
 
 import hu.bme.RPAOOITP.components.GenericFormLayout;
-import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
 import hu.bme.RPAOOITP.domain.model.Presence;
+import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.ejb.PresenceManager;
 import hu.bme.RPAOOITP.util.FieldUtil;
 
@@ -140,7 +140,7 @@ public class PresencePage extends AbstractLoggedInPage {
 	@Override
 	public void enter( final ViewChangeEvent event ) {
 		super.enter( event );
-		LoggedInUserDTO loggedInUser = authControl.getLoggedInUser();
+		User loggedInUser = authControl.getLoggedInUser();
 		presencesOfUser = presenceManager.findAllPresenceToUser( loggedInUser );
 		
 		PresenceBasicEventProvider eventProvider = (PresenceBasicEventProvider) calendar.getEventProvider();

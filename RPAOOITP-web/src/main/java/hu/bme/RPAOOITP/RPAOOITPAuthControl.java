@@ -1,8 +1,8 @@
 
 package hu.bme.RPAOOITP;
 
-import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
 import hu.bme.RPAOOITP.domain.io.LoginDTO;
+import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.domain.query.exception.LoginException;
 import hu.bme.RPAOOITP.ejb.UserManager;
 
@@ -22,7 +22,7 @@ public class RPAOOITPAuthControl extends AccessControl {
 	private UserManager userManager;
 	
 	public void login( final LoginDTO loginDTO ) throws LoginException {
-		LoggedInUserDTO loggedUser = userManager.login( loginDTO );
+		User loggedUser = userManager.login( loginDTO );
 		session.setUserDTO( loggedUser );
 	}
 	
@@ -49,7 +49,7 @@ public class RPAOOITPAuthControl extends AccessControl {
 		return null;
 	}
 	
-	public LoggedInUserDTO getLoggedInUser() {
+	public User getLoggedInUser() {
 		if (isUserSignedIn()) {
 			return session.getUserDTO();
 		}

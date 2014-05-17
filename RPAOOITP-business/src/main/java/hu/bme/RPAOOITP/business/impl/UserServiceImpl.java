@@ -2,14 +2,15 @@
 package hu.bme.RPAOOITP.business.impl;
 
 import hu.bme.RPAOOITP.business.UserService;
-import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
 import hu.bme.RPAOOITP.domain.io.LoginDTO;
 import hu.bme.RPAOOITP.domain.io.RegistrationDTO;
 import hu.bme.RPAOOITP.domain.model.Competency;
+import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.domain.query.UserQueries;
 import hu.bme.RPAOOITP.domain.query.exception.LoginException;
 import hu.bme.RPAOOITP.domain.query.exception.RegistrationException;
 
+import java.util.List;
 import java.util.Set;
 
 import com.google.inject.Inject;
@@ -20,7 +21,7 @@ public class UserServiceImpl implements UserService {
 	private UserQueries userQueries;
 	
 	@Override
-	public LoggedInUserDTO login( final LoginDTO loginDTO ) throws LoginException {
+	public User login( final LoginDTO loginDTO ) throws LoginException {
 		return userQueries.login( loginDTO );
 	}
 	
@@ -35,13 +36,13 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public void addCompetencies( final LoggedInUserDTO user, final Competency competency ) {
-		userQueries.addCompetencies( user, competency );
+	public Set<Competency> findAllCompetencyByUser( final User user ) {
+		return userQueries.findAllCompetencyByUser( user );
 	}
 	
 	@Override
-	public Set<Competency> findAllCompetencyByUser( final LoggedInUserDTO user ) {
-		return userQueries.findAllCompetencyByUser( user );
+	public List<User> findAllUser() {
+		return userQueries.findAllUser();
 	}
 	
 }

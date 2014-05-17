@@ -1,7 +1,7 @@
 
 package hu.bme.RPAOOITP;
 
-import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
+import hu.bme.RPAOOITP.domain.model.User;
 
 import java.io.Serializable;
 
@@ -15,6 +15,6 @@ import lombok.Setter;
 @Setter
 public class RPAOOITPSession implements Serializable {
 	
-	private LoggedInUserDTO userDTO;
+	private User userDTO;
 	
 }

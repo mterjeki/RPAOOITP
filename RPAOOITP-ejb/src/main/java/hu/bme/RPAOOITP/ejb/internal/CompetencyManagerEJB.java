@@ -1,11 +1,12 @@
 
 package hu.bme.RPAOOITP.ejb.internal;
 
-import hu.bme.RPAOOITP.business.BaseService;
+import hu.bme.RPAOOITP.business.CompetencyService;
 import hu.bme.RPAOOITP.domain.model.Competency;
+import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.ejb.CompetencyManager;
 
-import java.util.Set;
+import java.util.List;
 
 import javax.ejb.Local;
 import javax.ejb.Stateless;
@@ -16,12 +17,22 @@ public class CompetencyManagerEJB extends AbstractManagerEJB implements Competen
 	
 	@Override
 	public void createCompetency( final Competency competency ) {
-		buildInjector().getInstance( BaseService.class ).createCompetency( competency );
+		buildInjector().getInstance( CompetencyService.class ).createCompetency( competency );
 	}
 	
 	@Override
-	public Set<Competency> findAllCompetencies() {
-		return buildInjector().getInstance( BaseService.class ).findAllCompetencies();
+	public List<Competency> findAllCompetencies() {
+		return buildInjector().getInstance( CompetencyService.class ).findAllCompetencies();
+	}
+	
+	@Override
+	public void removeCompetency( final User user, final Competency competency ) {
+		buildInjector().getInstance( CompetencyService.class ).removeCompetency( user, competency );
+	}
+	
+	@Override
+	public void addCompetency( final User user, final Competency competency ) {
+		buildInjector().getInstance( CompetencyService.class ).addCompetency( user, competency );
 	}
 	
 }

@@ -2,14 +2,15 @@
 package hu.bme.RPAOOITP.ejb.internal;
 
 import hu.bme.RPAOOITP.business.UserService;
-import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
 import hu.bme.RPAOOITP.domain.io.LoginDTO;
 import hu.bme.RPAOOITP.domain.io.RegistrationDTO;
 import hu.bme.RPAOOITP.domain.model.Competency;
+import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.domain.query.exception.LoginException;
 import hu.bme.RPAOOITP.domain.query.exception.RegistrationException;
 import hu.bme.RPAOOITP.ejb.UserManager;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.ejb.Local;
@@ -20,7 +21,7 @@ import javax.ejb.Stateless;
 public class UserManagerEJB extends AbstractManagerEJB implements UserManager {
 	
 	@Override
-	public LoggedInUserDTO login( final LoginDTO loginDTO ) throws LoginException {
+	public User login( final LoginDTO loginDTO ) throws LoginException {
 		return buildInjector().getInstance( UserService.class ).login( loginDTO );
 	}
 	
@@ -35,13 +36,13 @@ public class UserManagerEJB extends AbstractManagerEJB implements UserManager {
 	}
 	
 	@Override
-	public void addCompetency( final LoggedInUserDTO user, final Competency competency ) {
-		buildInjector().getInstance( UserService.class ).addCompetencies( user, competency );
+	public Set<Competency> findAllCompetencyByUser( final User user ) {
+		return buildInjector().getInstance( UserService.class ).findAllCompetencyByUser( user );
 	}
 	
 	@Override
-	public Set<Competency> findAllCompetencyByUser( final LoggedInUserDTO user ) {
-		return buildInjector().getInstance( UserService.class ).findAllCompetencyByUser( user );
+	public List<User> findAllUser() {
+		return buildInjector().getInstance( UserService.class ).findAllUser();
 	}
 	
 }

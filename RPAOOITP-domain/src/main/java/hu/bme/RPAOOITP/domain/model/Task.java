@@ -4,9 +4,10 @@ package hu.bme.RPAOOITP.domain.model;
 import javax.persistence.Access;
 import javax.persistence.AccessType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
-import javax.persistence.OneToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -22,7 +23,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Task extends AbstractProjectUnit {
 	
-	@OneToOne
+	@ManyToOne( fetch = FetchType.EAGER )
 	private Process process;
+	
+	@ManyToOne( fetch = FetchType.EAGER )
+	private Project project;
 	
 }

@@ -21,6 +21,4 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Project extends AbstractProjectUnit {
 	
-	private String projectName;
-	
 }

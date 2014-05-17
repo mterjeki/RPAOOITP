@@ -9,6 +9,12 @@
 	<mapped-superclass class="AbstractProjectUnit"></mapped-superclass>
 	<entity class="Company"></entity>
 	<entity class="Competency"></entity>
+	<entity class="CompetencyToUser"></entity>
+	<entity class="CompetencyToProject"></entity>
+	<entity class="CompetencyToProcess"></entity>
+	<entity class="CompetencyToTask"></entity>
+	<entity class="EmployeeToCompany"></entity>
+	<entity class="ManagerToCompany"></entity>
 	<entity class="Presence"></entity>
 	<entity class="Process"></entity>
 	<entity class="Project"></entity>

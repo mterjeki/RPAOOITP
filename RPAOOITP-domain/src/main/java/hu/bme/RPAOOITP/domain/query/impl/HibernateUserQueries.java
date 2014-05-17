@@ -1,10 +1,11 @@
 
 package hu.bme.RPAOOITP.domain.query.impl;
 
-import hu.bme.RPAOOITP.domain.io.LoggedInUserDTO;
 import hu.bme.RPAOOITP.domain.io.LoginDTO;
 import hu.bme.RPAOOITP.domain.io.RegistrationDTO;
+import hu.bme.RPAOOITP.domain.model.Company;
 import hu.bme.RPAOOITP.domain.model.Competency;
+import hu.bme.RPAOOITP.domain.model.CompetencyToUser;
 import hu.bme.RPAOOITP.domain.model.User;
 import hu.bme.RPAOOITP.domain.query.UserQueries;
 import hu.bme.RPAOOITP.domain.query.exception.LoginException;
@@ -15,11 +16,13 @@ import java.util.Set;
 import java.util.UUID;
 
 import com.google.common.base.Preconditions;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 
 public class HibernateUserQueries extends AbstractHibernateBaseRPAOOITPQueries implements UserQueries {
 	
 	@Override
-	public LoggedInUserDTO login( final LoginDTO loginDTO ) throws LoginException {
+	public User login( final LoginDTO loginDTO ) throws LoginException {
 		Preconditions.checkNotNull( loginDTO );
 		String usernameOrEmail = loginDTO.getUsernameOrEmail();
 		String passwordIn = loginDTO.getPassword();
@@ -34,8 +37,8 @@ public class HibernateUserQueries extends AbstractHibernateBaseRPAOOITPQueries i
 			if (username.equals( usernameOrEmail ) || email.equals( usernameOrEmail )) {
 				
 				if (password.equals( passwordIn )) {
-					return new LoggedInUserDTO( user.getId(), user.getLastName(), user.getFirstName(), username, email,
-						user.getPassword() );
+					user.getCompany();
+					return user;
 				}
 				else {
 					throw new LoginException( "Incorrect password" );
@@ -70,7 +73,7 @@ public class HibernateUserQueries extends AbstractHibernateBaseRPAOOITPQueries i
 			}
 		}
 		
-		User user = new User( username, email, password, registrationDTO.getLastName(), registrationDTO.getFirstName() );
+		User user = new User( username, email, password, registrationDTO.getLastName(), registrationDTO.getFirstName(), null );
 		persistEntity( user );
 	}
 	
@@ -107,15 +110,47 @@ public class HibernateUserQueries extends AbstractHibernateBaseRPAOOITPQueries i
 	}
 	
 	@Override
-	public void addCompetencies( final LoggedInUserDTO user, final Competency competency ) {
+	public Set<Competency> findAllCompetencyByUser( final User user ) {
 		User loggedInUser = findEntityById( User.class, user.getId() );
-		loggedInUser.getCompetencies().add( competency );
+		List<CompetencyToUser> competenciesToUser = loadAll( CompetencyToUser.class );
+		
+		Set<Competency> competencies = Sets.newHashSet();
+		for (CompetencyToUser competencyToUserTMP : competenciesToUser) {
+			if (competencyToUserTMP.getUser().equals( loggedInUser )) {
+				competencies.add( competencyToUserTMP.getCompetency() );
+			}
+		}
+		
+		return competencies;
 	}
 	
 	@Override
-	public Set<Competency> findAllCompetencyByUser( final LoggedInUserDTO user ) {
-		User loggedInUser = findEntityById( User.class, user.getId() );
-		return loggedInUser.getCompetencies();
+	public List<User> findAllUser() {
+		List<User> loadAll = loadAll( User.class );
+		List<User> users = Lists.newArrayList();
+		
+		for (User user : loadAll) {
+			if (user.getCompany() == null) {
+				users.add( user );
+			}
+		}
+		
+		return users;
+	}
+	
+	@Override
+	public List<User> findAllUser( final Company company ) {
+		List<User> loadAll = loadAll( User.class );
+		List<User> users = Lists.newArrayList();
+		
+		for (User user : loadAll) {
+			if (user.getCompany().getId().equals( company.getId() )) {
+				user.getPresences();
+				users.add( user );
+			}
+		}
+		
+		return users;
 	}
 	
 }
